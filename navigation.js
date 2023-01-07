@@ -2,8 +2,9 @@ import React from 'react'
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import HomeScreen from './screens/HomeScreen';
-import inner from './screens/inner';
-;
+import Inner from './screens/Inner';
+import SignIn from './screens/SignIn';
+
 export default function RootNavigation() {
   const Stack = createStackNavigator()
 
@@ -14,11 +15,12 @@ const screenOptions = {
   return (
   <NavigationContainer>
     <Stack.Navigator 
-        initialRouteName='Homescreen'
+        initialRouteName='HomeScreen'
         screenOptions={screenOptions} 
     >
         <Stack.Screen name="HomeScreen" component={HomeScreen} />
-        <Stack.Screen name="inner" component={inner} />
+        <Stack.Screen name="Inner" component={Inner} />
+        <Stack.Screen name="SignIn" component={SignIn} />
     </Stack.Navigator>
   </NavigationContainer>
   )

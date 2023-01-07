@@ -1,10 +1,23 @@
 import { View, Text, SafeAreaView, StyleSheet, TouchableOpacity, Button, Alert } from 'react-native'
-import React from 'react'
-import { TextInput } from 'react-native-gesture-handler'
+import React, { useEffect } from 'react'
+import { TextInput } from 'react-native-gesture-handler';
+import { useState } from 'react';
+import { auth } from '../firebase';
 
-const inner = () => {
 
-  
+const Inner = ( { navigation }) => {
+
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((authUser) => {
+      if(authUser){
+        navigation.replace('Inner');
+    }})
+    return unsubscribe;
+  }, []);
+  const signIn= () => {};
   return (
     <View style={styles.container}>
       <View style={styles.inputField }>
@@ -14,6 +27,8 @@ const inner = () => {
         autoCapitalize='none'
         keyboardType='email-address'
         textContentType='emailAddress'
+        value={email}
+        onChangeText={(text) => setEmail(text)}
         
         autofocus={true}
         />
@@ -26,13 +41,16 @@ const inner = () => {
         placeholderTextColor='#999999'
         autoCapitalize='true'
         textContentType='password'
+        value={password}
+        onChangeText={(text) => setPassword(text)}
         
         autofocus={true}
         secureTextEntry={true}
         
         />
       </View>
-      <Button  title='Log In'  />
+      <Button   title='Log In'  />
+      <Button title='Sign Up'  type="outline" onPress={ () => navigation.navigate('SignIn')} />
     </View>
 
     
@@ -77,4 +95,4 @@ const styles = StyleSheet.create({
 
 
 
-export default inner
+export default Inner
